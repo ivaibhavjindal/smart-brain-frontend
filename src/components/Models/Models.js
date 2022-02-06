@@ -4,23 +4,23 @@ import ModelCard from "./ModelCard";
 
 const models = [
   {
-    name: "Face Detection",
+    name: "Food Detection",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quisquam dolor dolorum fugiat perferendis, id ipsa veritatis maiores doloribus iste.",
+      "Recognize more than 1,000 food items in images down to the ingredient level.",
     image:
-      "https://analyticsindiamag.com/wp-content/uploads/2020/04/Learn-Facial-Recognition-scaled.jpg",
-    link: "/models/facedetection",
+      "https://blog.qburst.com/wp-content/uploads/2019/08/Food-Image-Detector.jpg",
+    link: "/models/images/food",
   },
 ];
 
 function Models() {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6} lg={4}>
-        {models.map((model) => (
+      {models.map((model) => (
+        <Grid key={model} item xs={12} md={6} lg={4}>
           <ModelCard {...model} />
-        ))}
-      </Grid>
+        </Grid>
+      ))}
     </Grid>
   );
 }

@@ -1,52 +1,102 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import Button from "@mui/material/Button";
+import React, { useEffect } from "react";
+import {
+  Button,
+  TextField,
+  Box,
+  Container,
+  CssBaseline,
+  Card,
+  CardMedia,
+  CardActionArea,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import Loading from "../Loading/Loading";
+import Error from "../Error/Error";
 
-function Model() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [showImage, setShowImage] = useState(false);
+function Model(props) {
+  const {
+    user,
+    isLoggedIn,
+    history,
+    match,
+    image,
+    setImageUrl,
+    setImageModel,
+    fetchImageData,
+  } = props;
+  const { imageUrl, isLoading, error, data } = image;
 
+  if (!isLoggedIn) history.push("/signin");
+
+  useEffect(() => {
+    setImageModel(match.params.model);
+  }, []);
+
+  const handleSubmit = () => fetchImageData({ ...image, user });
   const handleChange = (e) => setImageUrl(e.target.value);
 
-  const handleSubmit = (e) => {
-    setShowImage(true);
-    // clarifai.models
-    //   .predict(Clarifai.FACE_DETECTION, imageUrl)
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
-
-    console.log(imageUrl);
-  };
+  if (isLoading) <Loading />;
+  else if (error) <Error error={error} />;
   return (
-    <Grid
-      container
-      spacing={2}
-      style={{ padding: "1rem", justifyContent: "center", marginTop: "4rem" }}
-    >
-      <Grid item xs={12} md={4}>
-        <FormControl variant="standard">
-          <InputLabel htmlFor="component-simple">Image Url</InputLabel>
-          <Input
-            id="component-simple"
-            value={imageUrl}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </Grid>
-      <Grid item xs={8} md={4} style={{ margin: "auto 0" }}>
-        <Button onClick={handleSubmit} variant="contained">
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="imageUrl"
+          label="Image URL"
+          name="imageUrl"
+          value={imageUrl}
+          onChange={handleChange}
+          autoFocus
+        />
+        <Button
+          onClick={handleSubmit}
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
           Detect
         </Button>
-      </Grid>
-      {showImage && (
-        <Grid item xs={12} style={{ textAlign: "center" }}>
-          <img src={imageUrl} width="450px" />
-        </Grid>
-      )}
-    </Grid>
+        {data && (
+          <Card sx={{ mt: 2, mb: 2 }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="350"
+                image={imageUrl}
+                alt={imageUrl}
+              />
+              <CardContent>
+                {data.length && (
+                  <Typography gutterBottom variant="h5" component="div">
+                    {data[0].name.toUpperCase()}
+                  </Typography>
+                )}
+                {data.length &&
+                  data.map(({ name, value }) => (
+                    <Button
+                      key={name}
+                      variant="contained"
+                      sx={{ m: 2 }}
+                    >{`${name} - ${value * 100}%`}</Button>
+                  ))}
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        )}
+      </Box>
+    </Container>
   );
 }
 
