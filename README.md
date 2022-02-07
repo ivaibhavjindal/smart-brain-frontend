@@ -13,6 +13,7 @@ The easiest deep learning AI ecosystem for developers, data scientists, and no-c
 ## Technologies
 * React
 * Material UI
+* Redux
 
 ## Demo (Mobile)
 
