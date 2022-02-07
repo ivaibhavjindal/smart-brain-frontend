@@ -6,6 +6,10 @@ The easiest deep learning AI ecosystem for developers, data scientists, and no-c
 
 ### https://smart-brain-mern.herokuapp.com/
 
+## Backend
+
+### https://github.com/ivaibhavjindal/smart-brain-backend
+
 ## Technologies
 * React
 * Material UI
