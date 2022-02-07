@@ -28,7 +28,7 @@ export const User = (
         ...state,
         isLoading: false,
         isLoggedIn: false,
-        error: action.payload,
+        error: String(action.payload),
       };
     case USER_LOGOUT:
       return {

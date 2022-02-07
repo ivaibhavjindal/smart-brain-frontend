@@ -8,8 +8,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import ErrorSnackBar from "../Snackbar/Error";
 
-function Signup({ registerUser }) {
+function Signup({ error, registerUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -25,6 +26,7 @@ function Signup({ registerUser }) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {error && <ErrorSnackBar error={"Username already exists!"} />}
       <Box
         sx={{
           marginTop: 8,

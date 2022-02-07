@@ -25,7 +25,7 @@ function Model(props) {
     setImageModel,
     fetchImageData,
   } = props;
-  const { imageUrl, isLoading, error, data } = image;
+  const { showImage, imageUrl, isLoading, error, data } = image;
 
   if (!isLoggedIn) history.push("/signin");
 
@@ -68,7 +68,7 @@ function Model(props) {
         >
           Detect
         </Button>
-        {data && (
+        {showImage && data && (
           <Card sx={{ mt: 2, mb: 2 }}>
             <CardActionArea>
               <CardMedia
@@ -88,8 +88,10 @@ function Model(props) {
                     <Button
                       key={name}
                       variant="contained"
-                      sx={{ m: 2 }}
-                    >{`${name} - ${value * 100}%`}</Button>
+                      sx={{ m: 1 }}
+                    >{`${name} - ${
+                      Math.round(value * 10000, 4) / 100
+                    }%`}</Button>
                   ))}
               </CardContent>
             </CardActionArea>

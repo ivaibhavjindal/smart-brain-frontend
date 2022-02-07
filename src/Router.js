@@ -25,16 +25,26 @@ function Router({
       <Route exact path="/" component={Home} />
       <Route exact path="/signin">
         {isLoggedIn ? (
-          <Redirect to="/models" />
+          <Redirect
+            to={{
+              pathname: "/models",
+              state: { success: "Signin" },
+            }}
+          />
         ) : (
-          <Signin loginUser={loginUser} />
+          <Signin error={String(user.error)} loginUser={loginUser} />
         )}
       </Route>
       <Route exact path="/signup">
         {isLoggedIn ? (
-          <Redirect to="/models" />
+          <Redirect
+            to={{
+              pathname: "/models",
+              state: { success: "Signup" },
+            }}
+          />
         ) : (
-          <Signup registerUser={registerUser} />
+          <Signup error={String(user.error)} registerUser={registerUser} />
         )}
       </Route>
       <Route exact path="/user" render={() => <User user={user} />} />

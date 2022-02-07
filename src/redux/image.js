@@ -7,12 +7,19 @@ import {
 } from "./actions/ActionTypes";
 
 export const Image = (
-  state = { imageUrl: "", model: "", data: "", isLoading: false, error: "" },
+  state = {
+    imageUrl: "",
+    model: "",
+    showImage: false,
+    data: "",
+    isLoading: false,
+    error: "",
+  },
   action
 ) => {
   switch (action.type) {
     case SET_IMAGE_URL:
-      return { ...state, imageUrl: action.payload };
+      return { ...state, showImage: false, imageUrl: action.payload };
 
     case SET_IMAGE_MODEL:
       return { ...state, model: action.payload };
@@ -24,7 +31,13 @@ export const Image = (
       return { ...state, isLoading: false, error: action.payload };
 
     case SET_IMAGE_DATA:
-      return { ...state, isLoading: false, error: "", data: action.payload };
+      return {
+        ...state,
+        showImage: true,
+        isLoading: false,
+        error: "",
+        data: action.payload,
+      };
 
     default:
       return state;

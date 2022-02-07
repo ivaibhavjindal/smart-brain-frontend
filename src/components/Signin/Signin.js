@@ -8,8 +8,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
+import ErrorSnackBar from "../Snackbar/Error";
 
-function Signin({ loginUser }) {
+function Signin({ error, loginUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -23,6 +24,7 @@ function Signin({ loginUser }) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {error && <ErrorSnackBar error={"Wrong username or password!"} />}
       <Box
         sx={{
           marginTop: 8,

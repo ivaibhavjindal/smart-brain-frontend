@@ -50,7 +50,8 @@ export const fetchImageData =
       })
       .then((res) => {
         const updateUser = { ...user, imageModels: user.imageModels + 1 };
-        updateUser.images.push(imageUrl);
+        if (updateUser.images.findIndex((img) => img === imageUrl) === -1)
+          updateUser.images.push(imageUrl);
 
         dispatch(setImageData(res.data));
         dispatch(setUser(updateUser));
@@ -120,14 +121,14 @@ export const fetchUser = () => (dispatch) => {
 
   const bearer = "bearer " + localStorage.getItem("token");
   axios
-    .get("users/isLoggedIn", {
+    .get("/users/isLoggedIn", {
       headers: {
         Authorization: bearer,
       },
     })
     .then((res) => {
       const { isLoggedIn, error, user } = res.data;
-      if (error || !isLoggedIn) dispatch(userError(error));
+      if (error || !isLoggedIn) dispatch(userError(""));
       else dispatch(setUser(user));
     })
     .catch((err) => {
